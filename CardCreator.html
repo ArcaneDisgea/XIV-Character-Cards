@@ -139,6 +139,82 @@
     
 
     
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="canvasSize"><span class="type-signature"></span>canvasSize<span class="type-signature"> :<a href="CardCreator.html#~CanvasDimensions">CardCreator~CanvasDimensions</a></span></h4>
+
+
+
+
+<div class="description">
+    The canvas's dimensions.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="CardCreator.html#~CanvasDimensions">CardCreator~CanvasDimensions</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="create-card.js.html">create-card.js</a>, <a href="create-card.js.html#line101">line 101</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
 
     
         <h3 class="subsection-title">Methods</h3>
@@ -149,7 +225,7 @@
     
 
     
-    <h4 class="name" id="createCard"><span class="type-signature">(async) </span>createCard<span class="signature">(charaId)</span><span class="type-signature"> &rarr; {Promise.&lt;Buffer>}</span></h4>
+    <h4 class="name" id="createCard"><span class="type-signature">(async) </span>createCard<span class="signature">(charaId, customImage)</span><span class="type-signature"> &rarr; {Promise.&lt;Buffer>}</span></h4>
     
 
     
@@ -216,6 +292,42 @@
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>customImage</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">Buffer</span>
+|
+
+<span class="param-type">null</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Optional parameter providing a custom
+image to be drawn between the background of the character card and the black information boxes.
+The image should be the same resolution as the default image. The default image size can be
+retrieved with <a href="CardCreator.html#canvasSize">CardCreator#canvasSize</a>. May be a URL, `data: `URI, a local file path,
+or a Buffer instance.</td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -253,7 +365,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="create-card.js.html">create-card.js</a>, <a href="create-card.js.html#line277">line 277</a>
+        <a href="create-card.js.html">create-card.js</a>, <a href="create-card.js.html#line302">line 302</a>
     </li></ul></dd>
     
 
@@ -380,7 +492,7 @@ generation methods.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="create-card.js.html">create-card.js</a>, <a href="create-card.js.html#line97">line 97</a>
+        <a href="create-card.js.html">create-card.js</a>, <a href="create-card.js.html#line114">line 114</a>
     </li></ul></dd>
     
 
@@ -436,6 +548,153 @@ generation methods.
     
 
     
+        <h3 class="subsection-title">Type Definitions</h3>
+
+        
+                
+<h4 class="name" id="~CanvasDimensions">CanvasDimensions</h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>width</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The width of the canvas.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>height</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The height of the canvas.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="create-card.js.html">create-card.js</a>, <a href="create-card.js.html#line91">line 91</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+    
 
     
 </article>
@@ -454,7 +713,7 @@ generation methods.
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sun May 30 2021 14:07:32 GMT+0000 (Coordinated Universal Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sat Aug 21 2021 20:16:04 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script> prettyPrint(); </script>
