@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>CardCreator<span class="signature">()</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>CardCreator<span class="signature">(xivApiKey<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -41,7 +41,7 @@
     
 
     
-    <h4 class="name" id="CardCreator"><span class="type-signature"></span>new CardCreator<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="CardCreator"><span class="type-signature"></span>new CardCreator<span class="signature">(xivApiKey<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -58,6 +58,67 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>xivApiKey</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The API key for the XIV API to be used in all requests.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -93,7 +154,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="create-card.js.html">create-card.js</a>, <a href="create-card.js.html#line87">line 87</a>
+        <a href="create-card.js.html">create-card.js</a>, <a href="create-card.js.html#line118">line 118</a>
     </li></ul></dd>
     
 
@@ -197,7 +258,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="create-card.js.html">create-card.js</a>, <a href="create-card.js.html#line101">line 101</a>
+        <a href="create-card.js.html">create-card.js</a>, <a href="create-card.js.html#line133">line 133</a>
     </li></ul></dd>
     
 
@@ -225,7 +286,7 @@
     
 
     
-    <h4 class="name" id="createCard"><span class="type-signature">(async) </span>createCard<span class="signature">(charaId, customImage)</span><span class="type-signature"> &rarr; {Promise.&lt;Buffer>}</span></h4>
+    <h4 class="name" id="createCard"><span class="type-signature">(async) </span>createCard<span class="signature">(characterId, customImage, language<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;Buffer>}</span></h4>
     
 
     
@@ -257,7 +318,11 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -269,7 +334,7 @@
 
         <tr>
             
-                <td class="name"><code>charaId</code></td>
+                <td class="name"><code>characterId</code></td>
             
 
             <td class="type">
@@ -285,7 +350,19 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">The Lodestone ID of the character to generate a card for.</td>
@@ -317,7 +394,19 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">Optional parameter providing a custom
@@ -325,6 +414,45 @@ image to be drawn between the background of the character card and the black inf
 The image should be the same resolution as the default image. The default image size can be
 retrieved with <a href="CardCreator.html#canvasSize">CardCreator#canvasSize</a>. May be a URL, `data: `URI, a local file path,
 or a Buffer instance.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>language</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    en
+                
+                </td>
+            
+
+            <td class="description last">The language that the cards should be in use for the request</td>
         </tr>
 
     
@@ -365,7 +493,7 @@ or a Buffer instance.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="create-card.js.html">create-card.js</a>, <a href="create-card.js.html#line302">line 302</a>
+        <a href="create-card.js.html">create-card.js</a>, <a href="create-card.js.html#line307">line 307</a>
     </li></ul></dd>
     
 
@@ -418,15 +546,15 @@ or a Buffer instance.</td>
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>const fs = require("fs");
+    <pre class="prettyprint"><code>const fs = require('fs');
 
 const card = new CardCreator();
-const lodestoneId = "13821878";
+const lodestoneId = '13821878';
 
 await card.ensureInit();
 const png = await card.createCard(lodestoneId);
 
-fs.writeFile("./test.png", png, err => {
+fs.writeFile('./test.png', png, err => {
   if (err) console.error(err);
 });</code></pre>
 
@@ -492,7 +620,7 @@ generation methods.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="create-card.js.html">create-card.js</a>, <a href="create-card.js.html#line114">line 114</a>
+        <a href="create-card.js.html">create-card.js</a>, <a href="create-card.js.html#line146">line 146</a>
     </li></ul></dd>
     
 
@@ -677,7 +805,7 @@ generation methods.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="create-card.js.html">create-card.js</a>, <a href="create-card.js.html#line91">line 91</a>
+        <a href="create-card.js.html">create-card.js</a>, <a href="create-card.js.html#line123">line 123</a>
     </li></ul></dd>
     
 
@@ -713,7 +841,7 @@ generation methods.
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sat Aug 21 2021 20:28:44 GMT+0000 (Coordinated Universal Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sat Nov 06 2021 20:00:23 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script> prettyPrint(); </script>

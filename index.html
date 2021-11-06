@@ -46,61 +46,54 @@
         <article><h1>XIV Character Cards</h1>
 <p><img src="https://img.shields.io/npm/v/xiv-character-cards" alt="npm Version">
 <a href="https://xivapi.github.io/XIV-Character-Cards/"><img src="https://img.shields.io/badge/docs-JSDoc-orange" alt="Documentation"></a></p>
-<p>API to create fancy cards for FFXIV characters based on their Lodestone data, hosted at https://ffxiv-character-cards.herokuapp.com.</p>
+<p>Library and API to create fancy cards for FFXIV characters based on their Lodestone data, powered by <a href="https://xivapi.com/">xivapi.com</a> and hosted at <a href="https://ffxiv-character-cards.herokuapp.com">https://ffxiv-character-cards.herokuapp.com</a>.</p>
 <p><img src="https://ffxiv-character-cards.herokuapp.com/characters/id/9575452.png" alt="Demo image"></p>
-<h2>Endpoints</h2>
-<h3>Getting images</h3>
-<p><code>https://ffxiv-character-cards.herokuapp.com/characters/id/&lt;LODESTONE ID&gt;.png</code>
-<br>Get the PNG for a character by its Lodestone ID.</p>
+<h2>API</h2>
+<p>All API calls support the <code>lang</code> query parameter to create a character card with information in the specified language. The supported languages are the same as <a href="https://xivapi.com/docs/Common-Features#language">xivapi.com</a>, which are English (en), Japanese (ja), German (de) and French (fr).</p>
+<p>E.g. a request for a german character card would look like this: <code>https://ffxiv-character-cards.herokuapp.com/characters/id/&lt;LODESTONE ID&gt;.png?lang=de</code></p>
+<h3>Getting a card for a character by its Lodestone ID</h3>
+<p><code>GET https://ffxiv-character-cards.herokuapp.com/characters/id/&lt;LODESTONE ID&gt;.png</code></p>
+<h3>Getting card for a character by its world and name</h3>
+<p><code>GET https://ffxiv-character-cards.herokuapp.com/characters/name/&lt;WORLD&gt;/&lt;CHARACTER NAME&gt;.png</code>
+<br><strong>Note:</strong> This is considerably slower than the creation by ID, since the character has to be looked up in the Lodestone first.</p>
 <br>
-<p><code>https://ffxiv-character-cards.herokuapp.com/characters/name/&lt;WORLD&gt;/&lt;CHARACTER NAME&gt;.png</code>
-<br>Get the PNG for a character by its world and name.</p>
-<h3>Requesting images to be cached</h3>
-<p>If you are using this API together with an application that requires the API to respond very quickly, like Discord, you need to ask it to &quot;prepare&quot; the image for a character beforehand.</p>
-<p><code>https://ffxiv-character-cards.herokuapp.com/prepare/id/&lt;LODESTONE ID&gt;</code>
-<br>Request a character image to be cached by its Lodestone ID.</p>
-<br>
-<p><code>https://ffxiv-character-cards.herokuapp.com/prepare/name/&lt;WORLD&gt;/&lt;CHARACTER NAME&gt;</code>
-<br>Request a character image to be cached by its world and name.</p>
-<p>The API will reply with its status, and in case of success, the URL to the final image.
+<p>If you are using this API together with an application that requires the API to respond very quickly, like Discord, you may need to ask it to &quot;prepare&quot; the card image for a character beforehand. The API will reply with its status, and in case of success, the URL to the final image.
 <code>{&quot;status&quot;:&quot;ok&quot;,&quot;url&quot;:&quot;/characters/id/123456789.png&quot;}</code></p>
-<h2>Using in your application</h2>
-<pre class="prettyprint source"><code>yarn add xiv-character-cards
+<h3>Requesting a card to be cached for a character by its Lodestone ID</h3>
+<p><code>GET https://ffxiv-character-cards.herokuapp.com/prepare/id/&lt;LODESTONE ID&gt;</code></p>
+<h3>Requesting a card to be cached for a character by its world and name</h3>
+<p><code>GET https://ffxiv-character-cards.herokuapp.com/prepare/name/&lt;WORLD&gt;/&lt;CHARACTER NAME&gt;</code></p>
+<h2>Library</h2>
+<p>To use the card creator as a library in your Node.JS application, first install it as a dependency with:</p>
+<pre class="prettyprint source lang-sh"><code>yarn add xiv-character-cards
 # or
 npm i xiv-character-cards
 </code></pre>
-<p>You will receive a PNG-buffer for you to use in your bot or application.<br>Check <code>index.js</code> for other usage examples.</p>
-<h3>Example</h3>
+<p>You can then instantiate the class <code>CardCreator</code> from the library, call the asynchronous <code>insureInit()</code> function to make sure all resources are loaded and then use the asynchronous <code>createCard()</code> function with your characters Lodestone ID. You will receive a promise that resolves to a <code>Buffer</code> of the PNG image of your card, that you can use in your bot or application.</p>
+<p>Check the <a href="https://xivapi.github.io/XIV-Character-Cards/">library documentation</a> for more details.</p>
+<blockquote>
+<p><strong>Note:</strong> The API server is not published as an NPM package, so if you want to host it yourself, clone the <a href="https://github.com/xivapi/XIV-Character-Cards">Github repository</a> and put the Express.JS webserver defined in the <code>index.js</code> file behind a reverse proxy.</p>
+</blockquote>
+<h3>Library example</h3>
 <pre class="prettyprint source lang-js"><code>const { CardCreator } = require(&quot;xiv-character-cards&quot;);
-const fs = require(&quot;fs&quot;);
+const { writeFileSync } = require(&quot;fs&quot;);
 
-const card = new CardCreator();
-const lodestoneid = &quot;13821878&quot;;
+const creator = new CardCreator();
+const lodestoneId = &quot;13821878&quot;;
 
-function example(cb) {
-  card.ensureInit()
-    .then(
-      () => card.createCard(lodestoneid),
-      (reason) => cb(&quot;Init failed: &quot; + reason, null)
-    )
-    .then((image) =>
-      cb(null, {
-        binary: {
-          image: image,
-        },
-      })
-    )
-    .catch((reason) => cb(&quot;createCard failed: &quot; + reason, null));
+async function example() {
+  await creator.ensureInit();
+  return creator.createCard(lodestoneId);
 }
 
-example((err, response) => {
-  const buffer = response.binary.image;
-  fs.writeFileSync(`./${lodestoneid}.png`, response.binary.image, (err) => {
-    if (err) {
-      console.log(err);
-    }
+example()
+  .then(card => {
+    writeFileSync(`./${lodestoneId}.png`, card);
+  })
+  .catch(error => {
+    console.error('Creator initialization or card creation failed!');
+    console.error(error);
   });
-});
 </code></pre></article>
     </section>
 
@@ -118,7 +111,7 @@ example((err, response) => {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sat Aug 21 2021 20:28:44 GMT+0000 (Coordinated Universal Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sat Nov 06 2021 20:00:23 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script> prettyPrint(); </script>
