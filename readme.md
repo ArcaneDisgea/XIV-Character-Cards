@@ -49,7 +49,7 @@ You can then instantiate the class `CardCreator` from the library, call the asyn
 
 Check the [library documentation](https://xivapi.github.io/XIV-Character-Cards/) for more details.
 
-> **Note:** The API server is not published as an NPM package, so if you want to host it yourself, clone the [Github repository](https://github.com/xivapi/XIV-Character-Cards) and put the Express.JS webserver defined in the `index.js` file behind a reverse proxy.
+> **Note:** The API server is not published as an NPM package, so if you want to host it yourself, clone the [Github repository](https://github.com/xivapi/XIV-Character-Cards) and put the Express.JS webserver defined in the `server.js` file behind a reverse proxy.
 
 ### Library example
 
